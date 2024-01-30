@@ -62,7 +62,6 @@ export const EditModalContent = (props: Props) => {
         </label>
       </div>
       <Button
-        className="todo-item__edit-btn"
         onClick={() => editItemHandler(editedTask)}
       >
         Edit

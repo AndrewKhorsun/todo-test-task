@@ -57,7 +57,7 @@ export const TaskList = () => {
     <div className="task-list">
       <Button onClick={() => setNewTaskModalOpen(true)}>Add new task</Button>
       {tasks?.map((el) => (
-        <TaskItem task={el} setTasks={setTasks} />
+        <TaskItem task={el} setTasks={setTasks} key={el.id}/>
       ))}
       <ModalBox
         isOpenModal={newTaskModalOpen}

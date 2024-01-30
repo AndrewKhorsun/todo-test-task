@@ -16,10 +16,10 @@ interface Props {
 
 export const TaskItem = (props: Props) => {
   const { setTasks, task } = props;
-  const [editedTodo, setEditedTodo] = useState(task);
+  const [editedTask, setEditedTask] = useState(task);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [removedItemModal, setRemovedItemModal] = useState(false);
-  const { completed, title, dueDate, id } = editedTodo;
+  const { completed, title, dueDate, id } = editedTask;
 
   const date = moment(dueDate).format("DD-MM-YYYY");
 
@@ -35,7 +35,7 @@ export const TaskItem = (props: Props) => {
         toast.error("A task cannot be without a name");
         return;
       }
-      setEditedTodo(newValue);
+      setEditedTask(newValue);
 
       updateTask.mutate(newValue, {
         onSuccess(updatedTask) {
@@ -65,9 +65,9 @@ export const TaskItem = (props: Props) => {
           <input
             type="checkbox"
             id="checkboxLabel"
-            checked={editedTodo.completed}
+            checked={editedTask.completed}
             onChange={(e) =>
-              editItemHandler({ ...editedTodo, completed: e.target.checked })
+              editItemHandler({ ...editedTask, completed: e.target.checked })
             }
           />
           <label htmlFor="checkboxLabel">Execution status: {taskStatus}</label>
@@ -75,13 +75,13 @@ export const TaskItem = (props: Props) => {
         <div className="task-item__btn">
           <Button
             onClick={() => setRemovedItemModal(true)}
-            className="todo-item__removed-btn"
+            className="task-item__removed-btn"
           >
             Delete task
           </Button>
 
           <Button
-            className="todo-item__edit-btn"
+            className="task-item__edit-btn"
             onClick={() => setEditModalOpen(true)}
           >
             Edit
