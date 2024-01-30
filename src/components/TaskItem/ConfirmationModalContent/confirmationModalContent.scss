@@ -1,0 +1,21 @@
+.confirm-modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  & > p {
+    font-size: 18px;
+  }
+
+  &__btn-block {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    &--btn {
+      flex: 1;
+    }
+  }
+}

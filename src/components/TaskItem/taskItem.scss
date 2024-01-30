@@ -1,11 +1,17 @@
-.todo-item {
-  border: 1px solid white;
+.task-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 500px;
+  width: 300px;
+  text-wrap: wrap;
+  border: 1px solid rgb(202, 202, 202);
+  margin-top: 20px;
   padding: 20px;
   border-radius: 10px;
-  margin-bottom: 10px;
 
-  &__list-item {
-    list-style: none;
-    text-align: start;
+  &__btn {
+    display: flex;
+    gap: 10px;
   }
 }

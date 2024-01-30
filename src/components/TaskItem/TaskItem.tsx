@@ -31,9 +31,13 @@ export const TaskItem = (props: Props) => {
 
   const editItemHandler = useCallback(
     (newValue: ITask) => {
+      if (!newValue.title) {
+        toast.error("A task cannot be without a name");
+        return;
+      }
       setEditedTodo(newValue);
 
-      updateTask.mutate(editedTodo, {
+      updateTask.mutate(newValue, {
         onSuccess(updatedTask) {
           setTasks((prev) => {
             return prev?.map((task) =>
@@ -49,12 +53,12 @@ export const TaskItem = (props: Props) => {
         },
       });
     },
-    [editedTodo, setTasks, updateTask]
+    [setTasks, updateTask]
   );
 
   return (
     <>
-      <div className="todo-item">
+      <div className="task-item">
         <p>Task: {title}</p>
         <p>Complete by: {date}</p>
         <div>
@@ -68,13 +72,14 @@ export const TaskItem = (props: Props) => {
           />
           <label htmlFor="checkboxLabel">Execution status: {taskStatus}</label>
         </div>
-        <div>
+        <div className="task-item__btn">
           <Button
             onClick={() => setRemovedItemModal(true)}
             className="todo-item__removed-btn"
           >
-            X
+            Delete task
           </Button>
+
           <Button
             className="todo-item__edit-btn"
             onClick={() => setEditModalOpen(true)}

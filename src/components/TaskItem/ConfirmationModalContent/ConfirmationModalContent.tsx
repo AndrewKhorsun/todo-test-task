@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { deleteTasks } from "../../../api/taskListAPI";
 import { toast } from "react-toastify";
 import { Button } from "../../Button/Button";
+import './confirmationModalContent.scss'
 
 interface Props {
   id: string;
@@ -30,20 +31,23 @@ export const ConfirmationModalContent = (props: Props) => {
     });
   }, [deleteTask, id, queryClient, setRemovedItemModal]);
   return (
-    <>
+    <div className="confirm-modal-content">
       <p>Are you sure you want to delete the task?</p>
-      <Button
-        className="todo-item__edit-btn"
-        onClick={() => deleteItemHandler()}
-      >
-        Yes
-      </Button>
-      <Button
-        className="todo-item__edit-btn"
-        onClick={() => setRemovedItemModal(false)}
-      >
-        No
-      </Button>
-    </>
+      <div className="confirm-modal-content__btn-block">
+        <Button
+          className="confirm-modal-content__btn-block--btn"
+          onClick={() => deleteItemHandler()}
+        >
+          Yes
+        </Button>
+
+        <Button
+          className="confirm-modal-content__btn-block--btn"
+          onClick={() => setRemovedItemModal(false)}
+        >
+          No
+        </Button>
+      </div>
+    </div>
   );
 };

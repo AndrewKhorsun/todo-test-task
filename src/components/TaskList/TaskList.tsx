@@ -4,56 +4,51 @@ import { TaskItem } from "../TaskItem/TaskItem";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ModalBox } from "../modalBox";
 import { ITask } from "../../types/task";
-import { v4 as uuidv4 } from "uuid";
-import DatePicker from "react-datepicker";
+
 import { toast } from "react-toastify";
 import "./taskList.scss";
 import { Button } from "../Button/Button";
-
-const defaultTaskValue: ITask = {
-  id: uuidv4(),
-  title: "",
-  completed: false,
-  dueDate: new Date(),
-};
+import { NewTaskModalContent } from "./NewTaskModalContent/NewTaskModalContent";
 
 export const TaskList = () => {
   const [newTaskModalOpen, setNewTaskModalOpen] = useState(false);
-  const [newTask, setNewTask] = useState<ITask>(defaultTaskValue);
+
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["tasks"],
     queryFn: getTasks,
   });
 
   const [tasks, setTasks] = useState(data);
-  console.log("tasks", tasks);
 
   const addTaskMutation = useMutation({
     mutationFn: (task: ITask) => addTasks(task),
   });
 
-  const handleDateChange = (date: Date) => {
-    setNewTask((prev) => ({ ...prev, dueDate: date }));
-  };
+  const addNewTask = useCallback(
+    (newTask: ITask) => {
+      if (!newTask.title) {
+        toast.error("A task cannot be without a name");
+        return;
+      }
 
-  const addNewTask = useCallback(() => {
-    addTaskMutation.mutate(newTask, {
-      onSuccess() {
-        refetch();
-        setNewTaskModalOpen(false);
-        setNewTask(defaultTaskValue);
-      },
-      onError(error) {
-        if (error instanceof Error) {
-          toast.error(error.message);
-        }
-      },
-    });
-  }, [addTaskMutation, newTask, refetch]);
+      addTaskMutation.mutate(newTask, {
+        onSuccess() {
+          refetch();
+          setNewTaskModalOpen(false);
+        },
+        onError(error) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+          }
+        },
+      });
+    },
+    [addTaskMutation, refetch]
+  );
 
-  useEffect(()=> {
-    setTasks(data)
-  },[data])
+  useEffect(() => {
+    setTasks(data);
+  }, [data]);
 
   if (isLoading) {
     return <div>...loading</div>;
@@ -68,25 +63,7 @@ export const TaskList = () => {
         isOpenModal={newTaskModalOpen}
         onCloseModal={setNewTaskModalOpen}
       >
-        <input
-          type="text"
-          value={newTask.title}
-          placeholder="task title"
-          onChange={(e) =>
-            setNewTask((prev) => ({ ...prev, title: e.target.value }))
-          }
-        />
-        <div>
-          <label>Дата выполнения:</label>
-          <DatePicker
-            selected={new Date(newTask.dueDate)}
-            onChange={handleDateChange}
-            dateFormat="dd/MM/yyyy"
-            showTimeSelect={false}
-            minDate={new Date()}
-          />
-        </div>
-        <Button onClick={() => addNewTask()}>add new task</Button>
+        <NewTaskModalContent addNewTask={addNewTask} />
       </ModalBox>
     </div>
   );

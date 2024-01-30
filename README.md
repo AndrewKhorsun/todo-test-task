@@ -1,30 +1,55 @@
-# React + TypeScript + Vite
+# todo-test-task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a project named "todo-test-task" developed using modern web technologies. Below, you will find instructions on how to set up and run the project locally.
 
-Currently, two official plugins are available:
+## Prerequisites
+Make sure you have the following tools installed on your machine before proceeding:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Node.js](https://nodejs.org/) (version 18 or later)
+- [npm](https://www.npmjs.com/) (version 7 or later)
 
-## Expanding the ESLint configuration
+## Installation
+1. Clone the repository to your local machine:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+    ```bash
+    git clone <repository-url>
+    cd todo-test-task
+    ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Install project dependencies using npm:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+    ```bash
+    npm install
+    ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Scripts
+
+### `npm start`
+- Concurrently runs the development server and the JSON server.
+
+### `npm run dev`
+- Starts the Vite development server.
+
+### `npm run build`
+- Transpiles TypeScript code and builds the project using Vite.
+
+### `npm run lint`
+- Lints the TypeScript and TypeScript React files using ESLint.
+
+### `npm run preview`
+- Builds and previews the project using Vite.
+
+### `npm run server`
+- Starts the JSON server, serving the data from `server/db.json` on port 5000.
+
+## Project Structure
+
+- **src:** Contains the source code for the React application.
+- **server/db.json:** JSON file used as a mock database for the JSON server.
+
+## Running the Project
+
+To run the project, use the following command:
+
+```bash
+npm start

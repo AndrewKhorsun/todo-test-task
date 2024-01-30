@@ -1,7 +1,7 @@
-.edit-modal-content {
+.new-task {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 
   &__date,
   &__input {
@@ -18,7 +18,7 @@
       color: #5a5a5a;
     }
   }
-
+  
   &__date {
     text-align: center;
   }

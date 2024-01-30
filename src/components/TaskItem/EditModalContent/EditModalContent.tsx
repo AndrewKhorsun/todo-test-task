@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./editModalContent.scss";
 import { ITask } from "../../../types/task";
 import DatePicker from "react-datepicker";
 import { Button } from "../../Button/Button";
+import "./editModalContent.scss";
 
 interface Props {
   taskItem: ITask;
@@ -18,19 +18,26 @@ export const EditModalContent = (props: Props) => {
     setEditedTask((prev) => ({ ...prev, dueDate: date }));
   };
 
+  const taskStatus = editedTask.completed ? "Completed" : "Not completed";
+
   return (
-    <>
+    <div className="edit-modal-content">
       <input
+        className="edit-modal-content__input"
+        id="inputTitle"
         type="text"
-        placeholder="title"
+        placeholder="Enter task name"
         value={editedTask.title}
         onChange={(e) =>
           setEditedTask((prev) => ({ ...prev, title: e.target.value }))
         }
       />
+
       <div>
-        <label>Дата выполнения:</label>
+        <label htmlFor="DatePicker">Final completion date: </label>
         <DatePicker
+          id="DatePicker"
+          className="edit-modal-content__date"
           selected={new Date(editedTask.dueDate)}
           onChange={handleDateChange}
           dateFormat="dd/MM/yyyy"
@@ -38,22 +45,28 @@ export const EditModalContent = (props: Props) => {
           minDate={new Date()}
         />
       </div>
-      <input
-        type="checkbox"
-        checked={editedTask.completed}
-        onChange={(e) =>
-          setEditedTask((prev) => ({
-            ...prev,
-            completed: e.target.checked,
-          }))
-        }
-      />
+      <div>
+        <input
+          type="checkbox"
+          id={`checkboxLabel-${editedTask.id}`}
+          checked={editedTask.completed}
+          onChange={(e) =>
+            setEditedTask((prev) => ({
+              ...prev,
+              completed: e.target.checked,
+            }))
+          }
+        />
+        <label htmlFor={`checkboxLabel-${editedTask.id}`}>
+          Execution status: {taskStatus}
+        </label>
+      </div>
       <Button
         className="todo-item__edit-btn"
         onClick={() => editItemHandler(editedTask)}
       >
         Edit
       </Button>
-    </>
+    </div>
   );
 };
